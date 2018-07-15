@@ -1,0 +1,17 @@
+div{
+    width:90%;
+    padding-left: 3%;
+    padding-right: 3%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+img{
+    padding: 0 0.5%;
+}
+
+table{
+    margin-left: 30%;
+}
+body{
+    background-color: gray;
+}
