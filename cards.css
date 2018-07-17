@@ -1,11 +1,9 @@
 div{
-    
-    
     margin-right: 2%;
     margin-left: 2%;
 }
 img{
-    padding: 0 0.25%;
+    padding: 0 0.5%;
 }
 
 table{
@@ -17,4 +15,17 @@ body{
 
 .clear-img{
     opacity: 0.1;
+}
+.container{
+    text-align: center;
+    border: 2px solid black;
+}
+.container-top{
+    text-align: center;
+    background-color: black;
+    color: aqua;
+}
+input{
+    font-size: 14pt;
+    text-align: center;
 }

@@ -21,6 +21,7 @@ var cardValue = null;
 var score = 0;
 var firstId;
 var scoreMultiplier = 1;
+var timer = 11;
 function shuffle(Deck) {
     var j, x, i;
     for (i = Deck.length - 1; i > 0; i--) {
@@ -35,11 +36,12 @@ function shuffle(Deck) {
 //difficulty value from the table and logically picks the coresponding game.
 function createNewGame() {
     score = 0;
+   
     difficulty = document.getElementById('fDifficulty').value;
     var body = document.getElementById('clear');
     body.innerHTML = '';
     if (difficulty == 1) { //Value 1 plays one full deck of cards any suit of the same value matches
-        Easy();
+        Hard();
         cardCount = 0;
     }
     if (difficulty == 2) { //value 2 plays two full decks of cards any suit of the same value matches
@@ -47,15 +49,21 @@ function createNewGame() {
         cardCount = 0;
     }
     gameMenue();
+
+    var resettimmer=setInterval(tyme, 1000);
+    if(timer<0){clearInterval(resettimmer)}
+   
 }
+    
+
 function gameMenue() {
     var body = document.getElementById('clear');
-    body.innerHTML += "<div id=\"resetTable\"><table style=\"border:2px solid blue\"><thead><th>Match by Larry Shimmell</th></thead><tr><td>Select Difficulty</td><td><select name=\"Difficulty\" id=\"fDifficulty\"><option type=\"number\" value=\"1\">Easy</option><option type=\"number\" value=\"1\">Easy</option></select></td></tr><tr><td><button class=\"button\" onclick=\"createNewGame()\">New Game</button>\n            </td>\n            <td><button class=\"button\" onclick=\"hide()\">Start</button></td>\n        </tr>\n        <tr>\n            <td>\n                <img src=\"Cards/aces.png\" alt=\"guess\" width=\"100px\">\n            </td>\n            <td>Score:<input id=\"score\" type=\"number\" readonly></td>\n        </tr>\n        \n    </table></div>";
+    body.innerHTML += "<div id=\"resetTable\"><table style=\"border:2px solid blue\"><thead><th>Match by Larry Shimmell</th></thead><tr><td>Select Difficulty</td><td><select name=\"Difficulty\" id=\"fDifficulty\"><option type=\"number\" value=\"1\">Hard</option><option type=\"number\" value=\"1\">Easy</option></select></td></tr><tr><td><button class=\"button\" onclick=\"createNewGame()\">New Game</button>\n            </td>\n            <td><button class=\"button\" onclick=\"hide()\">Start</button></td>\n        </tr>\n        <tr>\n            <td>\n                <img src=\"Cards/aces.png\" alt=\"guess\" width=\"100px\">\n            </td>\n            <td>Score:<input id=\"score\" type=\"number\" readonly></td>\n        </tr>\n        \n    </table></div>";
 }
-function Easy() {
+function Hard() {
     shuffle(Deck);
     var body = document.getElementById('clear');
-    var row = '<div>';
+    var row = '<div class="container-top"><h1><input id="timer" type="number" readonly></h1></div><div class ="container"><div>';
     var last = '';
     var i = Deck.length;
     for (var j = 0; Deck.length > j; j++) {
@@ -71,7 +79,7 @@ function Easy() {
             row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"80px\" class=\"" + valueofCard + "\" type=\"number\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img></div><div>";
         }
     }
-    body.innerHTML += row;
+    body.innerHTML += row+ '</div></div>';
 }
 function Medium() {
     shuffle(DeckClone2);
@@ -100,6 +108,7 @@ function hide() {
     replace.innerHTML = '';
     score = 0;
     if (difficulty == 1) {
+    
         for (var card = 0; DeckClone.length > card; card++) { //finds all the images and changes them to back of card
             var idx = DeckClone[card].lastIndexOf('g') + 1;
             var img = DeckClone[card].slice(0, idx);
@@ -108,6 +117,7 @@ function hide() {
             lookHere = newbody;
         }
     }
+    
     if (difficulty == 2) {
         for (var card = 0; DeckClone2.length > card; card++) { //finds all the images and changes them to back of card
             var idx = DeckClone2[card].lastIndexOf('g') + 1;
@@ -123,7 +133,7 @@ function flip(id) {
     var replace = document.getElementById(id).name;
     var final = document.getElementById(id);
     var replaceEasy = document.getElementById(id).className;
-    if (difficulty != 1) {
+    /*if (difficulty != 1) {
         if (cardtochange.includes('Cards/backofcard.png')) {
             var idx = cardtochange.replace('Cards/backofcard.png', replace);
             var xcard = document.getElementById(id).name;
@@ -135,15 +145,15 @@ function flip(id) {
             }
             grabCard = !grabCard;
             NameofCard = replace;
-            /*if(grabCard == false){
+            if(grabCard == false){
                 checkNameofCard(replace)
-            }*/
+            }
         }
         if (!(cardtochange.includes('Cards/backofcard.png'))) {
             var idx = cardtochange.replace("src=\"" + replace + "\"", 'src="Cards/backofcard.png"');
             final.outerHTML = idx;
         }
-    }
+    }*/
     if (cardtochange.includes('Cards/backofcard.png')) {
         var idx = cardtochange.replace('Cards/backofcard.png', replace);
         var xcard = document.getElementById(id).className;
@@ -162,7 +172,7 @@ function flip(id) {
                 toGray.outerHTML = "<img src='Cards/gray.png' alt=\"guess\" width=\"80px\" class=\"clear-img\" id=\"" + id + "\"></img>";
                 toGray2.outerHTML = "<img src='Cards/gray.png'alt=\"guess\" width=\"80px\" class=\"clear-img\"  id=\"" + firstId + "\" ></img>";
                 highscore.value = score;
-            }, 700); 
+            }, 1000); 
             
             cardValue = null;
             return;
@@ -183,8 +193,7 @@ function flip(id) {
                     score-=1;
                     highscore.value = score;
                 }   
-            }, 1500); 
-
+            }, 1000); 
         }
         firstId = id;
         cardValue = replaceEasy;
@@ -200,3 +209,20 @@ function flip(id) {
     }*/
     return;
 }
+
+function tyme(){
+    if(timer>0){
+    timer--;
+    var timeout = document.getElementById('timer');
+    timeout.value = timer; 
+    }
+    if(timer==0){
+        timer--;
+        hide();
+        console.log(timer);
+        return;
+    
+    }
+    
+}
+
