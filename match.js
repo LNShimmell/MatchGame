@@ -52,13 +52,14 @@ function createNewGame() {
 
     var resettimmer=setInterval(tyme, 1000);
     if(timer<0){clearInterval(resettimmer)}
+    timer = 11;
    
 }
     
 
 function gameMenue() {
     var body = document.getElementById('clear');
-    body.innerHTML += "<div id=\"resetTable\"><table style=\"border:2px solid blue\"><thead><th>Match by Larry Shimmell</th></thead><tr><td>Select Difficulty</td><td><select name=\"Difficulty\" id=\"fDifficulty\"><option type=\"number\" value=\"1\">Hard</option><option type=\"number\" value=\"1\">Easy</option></select></td></tr><tr><td><button class=\"button\" onclick=\"createNewGame()\">New Game</button>\n            </td>\n            <td><button class=\"button\" onclick=\"hide()\">Start</button></td>\n        </tr>\n        <tr>\n            <td>\n                <img src=\"Cards/aces.png\" alt=\"guess\" width=\"100px\">\n            </td>\n            <td>Score:<input id=\"score\" type=\"number\" readonly></td>\n        </tr>\n        \n    </table></div>";
+    body.innerHTML += "<div id=\"resetTable\"><table style=\"border:2px solid blue\"><thead><th>Match by Larry Shimmell</th></thead><tr><td>Select Difficulty</td><td><select name=\"Difficulty\" id=\"fDifficulty\"><option type=\"number\" value=\"1\">Hard</option><option type=\"number\" value=\"1\">Easy</option></select></td></tr><tr><td><button class=\"button\" onclick=\"createNewGame()\">New Game</button></td></tr><tr><td><img src=\"Cards/aces.png\" alt=\"guess\" width=\"100px\"></td><td>Score:<input id=\"score\" type=\"number\" readonly></td></tr></table></div>";
 }
 function Hard() {
     shuffle(Deck);

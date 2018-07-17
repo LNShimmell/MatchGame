@@ -1,9 +1,11 @@
 div{
     margin-right: 2%;
     margin-left: 2%;
+    min-width: 96%;
 }
 img{
     padding: 0 0.5%;
+    max-width: 6.5%;
 }
 
 table{
@@ -28,4 +30,8 @@ body{
 input{
     font-size: 14pt;
     text-align: center;
+}
+
+#menucard{
+    max-width: 30%;
 }
