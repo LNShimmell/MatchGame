@@ -14,3 +14,7 @@ table{
 body{
     background-color: gray;
 }
+
+.clear-img{
+    opacity: 0.1;
+}

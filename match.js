@@ -159,8 +159,8 @@ function flip(id) {
             var toGray = document.getElementById(id);
             var toGray2 = document.getElementById(firstId);
             setTimeout(function(){
-                toGray.outerHTML = "<img src='Cards/gray.png' alt=\"guess\" width=\"80px\"  id=\"" + id + "\"></img>";
-                toGray2.outerHTML = "<img src='Cards/gray.png'alt=\"guess\" width=\"80px\"  id=\"" + firstId + "\" ></img>";
+                toGray.outerHTML = "<img src='Cards/gray.png' alt=\"guess\" width=\"80px\" class=\"clear-img\" id=\"" + id + "\"></img>";
+                toGray2.outerHTML = "<img src='Cards/gray.png'alt=\"guess\" width=\"80px\" class=\"clear-img\"  id=\"" + firstId + "\" ></img>";
                 highscore.value = score;
             }, 700); 
             
