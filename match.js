@@ -50,7 +50,7 @@ function createNewGame() {
 }
 function gameMenue() {
     var body = document.getElementById('clear');
-    body.innerHTML += "<div id=\"resetTable\"><table style=\"border:2px solid blue\">\n        <thead>\n            <th>\n            Too hard? Change the difficulty\n            </th>\n        </thead>\n        \n        <tr>\n            <td>\n                Select Difficulty\n            </td>\n            <td><select name=\"Difficulty\" id=\"fDifficulty\">\n                <option type=\"number\" value=\"1\">Easy</option>\n                <option type=\"number\" value=\"2\">Hard</option>\n            </select></td>\n        </tr>\n        <tr><td>\n            <button class=\"button\" onclick=\"createNewGame()\">New Game</button>\n            </td>\n            <td><button class=\"button\" onclick=\"hide()\">Start</button></td>\n        </tr>\n        <tr>\n            <td>\n                <img src=\"Cards/aces.png\" alt=\"guess\" width=\"100px\">\n            </td>\n            <td>Score:<input id=\"score\" type=\"number\" readonly></td>\n        </tr>\n        \n    </table></div>";
+    body.innerHTML += "<div id=\"resetTable\"><table style=\"border:2px solid blue\"><thead><th>Match by Larry Shimmell</th></thead><tr><td>Select Difficulty</td><td><select name=\"Difficulty\" id=\"fDifficulty\"><option type=\"number\" value=\"1\">Easy</option><option type=\"number\" value=\"1\">Easy</option></select></td></tr><tr><td><button class=\"button\" onclick=\"createNewGame()\">New Game</button>\n            </td>\n            <td><button class=\"button\" onclick=\"hide()\">Start</button></td>\n        </tr>\n        <tr>\n            <td>\n                <img src=\"Cards/aces.png\" alt=\"guess\" width=\"100px\">\n            </td>\n            <td>Score:<input id=\"score\" type=\"number\" readonly></td>\n        </tr>\n        \n    </table></div>";
 }
 function Easy() {
     shuffle(Deck);
@@ -64,11 +64,11 @@ function Easy() {
         var idx = Deck[j].lastIndexOf('g') + 1; // seperates the img string from the value string
         var img = Deck[j].slice(0, idx); // becomes the value
         var valueofCard = Deck[j].substring(idx, Deck[j].length);
-        if (i % 26 != 0) {
-            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\" class=\"" + valueofCard + "\" type=\"number\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
+        if (i % 13 != 0) {
+            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"80px\" class=\"" + valueofCard + "\" type=\"number\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
         }
-        if (i % 26 == 0) {
-            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\" class=\"" + valueofCard + "\" type=\"number\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img></div><div>";
+        if (i % 13 == 0) {
+            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"80px\" class=\"" + valueofCard + "\" type=\"number\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img></div><div>";
         }
     }
     body.innerHTML += row;
@@ -86,10 +86,10 @@ function Medium() {
         var img = DeckClone2[j].slice(0, idx);
         //var valueofCard = Deck[j].substring(idx,Deck[j].length)    
         if (i % 26 != 0) {
-            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\"  type=\"string\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
+            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"50px\"  type=\"string\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
         }
         if (i % 26 == 0) {
-            row += "<img src=\"" + img + "\" name=\"" + img + "\"  alt=\"guess\" width=\"40px\"  type=\"string\" id=\"" + cardCount + " onclick=\"flip(" + cardCount + ")\"></img></div><div>";
+            row += "<img src=\"" + img + "\" name=\"" + img + "\"  alt=\"guess\" width=\"50px\"  type=\"string\" id=\"" + cardCount + " onclick=\"flip(" + cardCount + ")\"></img></div><div>";
         }
     }
     body.innerHTML += row;
@@ -159,8 +159,8 @@ function flip(id) {
             var toGray = document.getElementById(id);
             var toGray2 = document.getElementById(firstId);
             setTimeout(function(){
-                toGray.outerHTML = "<img src='Cards/gray.png' alt=\"guess\" width=\"40px\"  id=\"" + id + "\"></img>";
-                toGray2.outerHTML = "<img src='Cards/gray.png'alt=\"guess\" width=\"40px\"  id=\"" + firstId + "\" ></img>";
+                toGray.outerHTML = "<img src='Cards/gray.png' alt=\"guess\" width=\"80px\"  id=\"" + id + "\"></img>";
+                toGray2.outerHTML = "<img src='Cards/gray.png'alt=\"guess\" width=\"80px\"  id=\"" + firstId + "\" ></img>";
 
             }, 700); 
             
@@ -188,10 +188,11 @@ function flip(id) {
             checkNameofCard(replace)
         }*/
     }
-    if (!(cardtochange.includes('Cards/backofcard.png'))) {
+    /*if (!(cardtochange.includes('Cards/backofcard.png'))) {
         var idx = cardtochange.replace("src=\"" + replace + "\"", 'src="Cards/backofcard.png"');
         final.outerHTML = idx;
         cardValue = null;
         firstId = null;
-    }
+    }*/
+    return;
 }
