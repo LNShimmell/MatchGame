@@ -17,6 +17,10 @@ var difficulty;
 var cardCount = 0;
 var grabCard = false;
 var NameofCard = '';
+var cardValue = null;
+var score = 0;
+var firstId;
+var scoreMultiplier = 1;
 function shuffle(Deck) {
     var j, x, i;
     for (i = Deck.length - 1; i > 0; i--) {
@@ -27,10 +31,10 @@ function shuffle(Deck) {
     }
     return Deck;
 }
-var score = 0;
 //first function called by the only button on the home screan takes
 //difficulty value from the table and logically picks the coresponding game.
 function createNewGame() {
+    score = 0;
     difficulty = document.getElementById('fDifficulty').value;
     var body = document.getElementById('clear');
     body.innerHTML = '';
@@ -61,10 +65,10 @@ function Easy() {
         var img = Deck[j].slice(0, idx); // becomes the value
         var valueofCard = Deck[j].substring(idx, Deck[j].length);
         if (i % 26 != 0) {
-            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\" value=\"" + valueofCard + "\" type=\"string\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
+            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\" class=\"" + valueofCard + "\" type=\"number\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
         }
         if (i % 26 == 0) {
-            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\" value=\"" + valueofCard + "\" type=\"string\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img></div><div>";
+            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\" class=\"" + valueofCard + "\" type=\"number\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img></div><div>";
         }
     }
     body.innerHTML += row;
@@ -82,10 +86,10 @@ function Medium() {
         var img = DeckClone2[j].slice(0, idx);
         //var valueofCard = Deck[j].substring(idx,Deck[j].length)    
         if (i % 26 != 0) {
-            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\" value=\"" + img + "\" type=\"string\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
+            row += "<img src='" + img + "' name=\"" + img + "\" alt=\"guess\" width=\"40px\"  type=\"string\" id=\"" + cardCount + "\" onclick=\"flip(" + cardCount + ")\"></img>";
         }
         if (i % 26 == 0) {
-            row += "<img src=\"" + img + "\" name=\"" + img + "\"  alt=\"guess\" width=\"40px\" value=\"" + img + "\" type=\"string\" id=\"" + cardCount + " onclick=\"flip(" + cardCount + ")\"></img></div><div>";
+            row += "<img src=\"" + img + "\" name=\"" + img + "\"  alt=\"guess\" width=\"40px\"  type=\"string\" id=\"" + cardCount + " onclick=\"flip(" + cardCount + ")\"></img></div><div>";
         }
     }
     body.innerHTML += row;
@@ -94,6 +98,7 @@ function hide() {
     var lookHere = document.getElementById('clear').outerHTML;
     var replace = document.getElementById('clear');
     replace.innerHTML = '';
+    score = 0;
     if (difficulty == 1) {
         for (var card = 0; DeckClone.length > card; card++) { //finds all the images and changes them to back of card
             var idx = DeckClone[card].lastIndexOf('g') + 1;
@@ -117,17 +122,68 @@ function flip(id) {
     var cardtochange = document.getElementById(id).outerHTML;
     var replace = document.getElementById(id).name;
     var final = document.getElementById(id);
+    var replaceEasy = document.getElementById(id).className;
+    if (difficulty != 1) {
+        if (cardtochange.includes('Cards/backofcard.png')) {
+            var idx = cardtochange.replace('Cards/backofcard.png', replace);
+            var xcard = document.getElementById(id).name;
+            final.outerHTML = idx;
+            if (NameofCard == xcard) {
+                score += 10;
+                var highscore = document.getElementById('score');
+                highscore.value = score;
+            }
+            grabCard = !grabCard;
+            NameofCard = replace;
+            /*if(grabCard == false){
+                checkNameofCard(replace)
+            }*/
+        }
+        if (!(cardtochange.includes('Cards/backofcard.png'))) {
+            var idx = cardtochange.replace("src=\"" + replace + "\"", 'src="Cards/backofcard.png"');
+            final.outerHTML = idx;
+        }
+    }
     if (cardtochange.includes('Cards/backofcard.png')) {
         var idx = cardtochange.replace('Cards/backofcard.png', replace);
-        var xcard = document.getElementById(id).name;
+        var xcard = document.getElementById(id).className;
         final.outerHTML = idx;
-        if (NameofCard == xcard) {
-            score += 10;
+        grabCard = !grabCard; console.log(grabCard);
+        
+        if (grabCard == false && cardValue == xcard) {
             var highscore = document.getElementById('score');
+            var lastid = document.getElementById(firstId);
+            score += 10 * scoreMultiplier;
+            scoreMultiplier++;
             highscore.value = score;
+            var toGray = document.getElementById(id);
+            var toGray2 = document.getElementById(firstId);
+            setTimeout(function(){
+                toGray.outerHTML = "<img src='Cards/gray.png' alt=\"guess\" width=\"40px\"  id=\"" + id + "\"></img>";
+                toGray2.outerHTML = "<img src='Cards/gray.png'alt=\"guess\" width=\"40px\"  id=\"" + firstId + "\" ></img>";
+
+            }, 700); 
+            
+            cardValue = null;
+            return;
         }
-        grabCard = !grabCard;
-        NameofCard = replace;
+        if(grabCard == false && cardValue != xcard){
+            var backtoblue1 = document.getElementById(id);
+            var replaceImg = document.getElementById(id).name;
+            var changit = document.getElementById(id).outerHTML;
+            var backtoblue2 = document.getElementById(firstId);
+            var replaceImg2 = document.getElementById(firstId).name;
+            var changit2 = document.getElementById(firstId).outerHTML;
+            scoreMultiplier = 1;
+            setTimeout(function(){
+                backtoblue1.outerHTML = changit.replace(replaceImg,'Cards/backofcard.png');
+                backtoblue2.outerHTML = changit2.replace( replaceImg2, 'Cards/backofcard.png')
+
+            }, 1500); 
+
+        }
+        firstId = id;
+        cardValue = replaceEasy;
         /*if(grabCard == false){
             checkNameofCard(replace)
         }*/
@@ -135,5 +191,7 @@ function flip(id) {
     if (!(cardtochange.includes('Cards/backofcard.png'))) {
         var idx = cardtochange.replace("src=\"" + replace + "\"", 'src="Cards/backofcard.png"');
         final.outerHTML = idx;
+        cardValue = null;
+        firstId = null;
     }
 }
