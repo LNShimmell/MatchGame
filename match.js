@@ -155,13 +155,13 @@ function flip(id) {
             var lastid = document.getElementById(firstId);
             score += 10 * scoreMultiplier;
             scoreMultiplier++;
-            highscore.value = score;
+            
             var toGray = document.getElementById(id);
             var toGray2 = document.getElementById(firstId);
             setTimeout(function(){
                 toGray.outerHTML = "<img src='Cards/gray.png' alt=\"guess\" width=\"80px\"  id=\"" + id + "\"></img>";
                 toGray2.outerHTML = "<img src='Cards/gray.png'alt=\"guess\" width=\"80px\"  id=\"" + firstId + "\" ></img>";
-
+                highscore.value = score;
             }, 700); 
             
             cardValue = null;
@@ -178,7 +178,11 @@ function flip(id) {
             setTimeout(function(){
                 backtoblue1.outerHTML = changit.replace(replaceImg,'Cards/backofcard.png');
                 backtoblue2.outerHTML = changit2.replace( replaceImg2, 'Cards/backofcard.png')
-
+                var highscore = document.getElementById('score');
+                if(score>0){
+                    score-=1;
+                    highscore.value = score;
+                }   
             }, 1500); 
 
         }
